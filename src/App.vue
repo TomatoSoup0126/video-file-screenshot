@@ -1,20 +1,26 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script setup>
+import { screenshot } from '@/utils/screenshot';
+import { ref } from 'vue';
+
+
+const imagePath = ref('');
+
+const getScreenshot = async (e) => {
+  const file = e.target.files[0];
+  const res = await screenshot(URL.createObjectURL(file));
+  imagePath.value = res;
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <input
+    type="file"
+    @change="getScreenshot"
+  />
+  <div v-if="imagePath">
+    <p>↓ print screen shot ↓</p>
+    <img :src="imagePath" alt="screenshot" />
+  </div>
 </template>
 
 <style scoped>
