@@ -1,4 +1,4 @@
-export const screenshot = (videoPath) => {
+export const screenshot = (videoPath: string): Promise<string> => {
   return new Promise((resolve) => {
     const video = document.createElement('video');
 
@@ -9,8 +9,8 @@ export const screenshot = (videoPath) => {
       const canvas = document.createElement('canvas');
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
-      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-      const data = canvas.toDataURL('image/png');
+      canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const data = canvas.toDataURL('image/png') as string;
       resolve(data);
     };
 

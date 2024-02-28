@@ -1,13 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import { screenshot } from '@/utils/screenshot';
 import { ref } from 'vue';
 
 
 const imagePath = ref('');
 
-const getScreenshot = async (e) => {
-  const file = e.target.files[0];
-  const res = await screenshot(URL.createObjectURL(file));
+const getScreenshot = async (e: Event) => {
+  const file = (e.target as HTMLInputElement)?.files?.[0] as Blob;
+  const res = await screenshot(URL.createObjectURL(file)) as string;
   imagePath.value = res;
 }
 </script>
